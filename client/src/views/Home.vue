@@ -37,9 +37,9 @@
           {{ developer.data_nascimento }}
         </td>
         <td class="action-column">
-          <a href="/produto/">Exibir</a>
-          <a href="/produto/editar/">Editar</a>
-          <a href="/produto/apagar/">Excluir</a>
+          <button @click="handleShowDeveloper(developer.id)">Exibir</button>
+          <button >Editar</button>
+          <button >Excluir</button>
         </td>
       </tr>
     </table>
@@ -64,6 +64,9 @@ export default {
       const { data: response } = await api.getAll();
 
       this.developers = response.data;
+    },
+    handleShowDeveloper(developerId) {
+      return this.$router.push({ name: 'developer', params: { developerId } });
     }
   }
 }
