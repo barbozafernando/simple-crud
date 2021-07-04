@@ -1,31 +1,54 @@
 <template>
-  <div>
-    <h1>Exibir Produto</h1>
+  <div class="body">
+    <h1>Desenvolvedor</h1>
   
     <div class="box">
       <div class="content">
         <p>
-          ID: <strong>{{ this.developer.id }}</strong>
+          <label for="id">ID:</label> </br>
+
+          <input type="text" v-model="this.developer.id" />
         </p>
 
         <p>
-          Nome: <strong>{{ this.developer.nome }}</strong>
+          <label for="nome">Nome:</label> </br>
+
+          <input type="text" v-model="this.developer.nome" />
         </p>
 
         <p>
-          Idade: <strong>{{ this.developer.idade }}</strong>
+          <label for="idade">Idade:</label></br>
+
+          <input type="text" v-model="this.developer.idade" />
         </p>
 
         <p>
-          Sexo: <strong>{{ formatSexo(this.developer.sexo) }}</strong>
+          <label for="sexo">Sexo:</label></br>
+          
+          <select name="sexo" v-model="this.developer.sexo">
+            <option value="M" >Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
         </p>
 
         <p>
-          Hobby: <strong>{{ this.developer.hobby }}</strong>
+          <label for="hobby">Hobby:</label></br>
+
+          <textarea 
+            name="hobby" 
+            v-model="this.developer.hobby" 
+            rows="5"
+          />
         </p>
 
         <p>
-          Data de nascimento: <strong>{{ this.developer.data_nascimento }}</strong>
+          <label for="data_nascimento">Data de nascimento:</label></br>
+
+          <input 
+            type="date" 
+            name="data_nascimento" 
+            v-model="this.developer.data_nascimento"
+          />
         </p>
 
         <button 
@@ -57,9 +80,6 @@ export default {
     }
   },
   methods: {
-    formatSexo(sexo) {
-      return sexo === "M" ? "Masculino" : "Feminino";
-    },
     goToPreviousRoute() {
       return this.$router.go(-1);
     }
@@ -68,14 +88,14 @@ export default {
 </script>
 
 <style scoped>
-  body {
+  .body {
     text-align: center;
-    font-size: 20px;
+    font-weight: bold;
   }
   .box {
     background-color: lightgrey;
     width: 80rem;
-    height: 350px;
+    height: 33rem;
     margin: auto;
     border-radius: 5px;
   }
@@ -86,7 +106,7 @@ export default {
     text-decoration: none;
     color: black;
   }
-  button {
-    font-size: 18px;
+  textarea {
+    resize: none;
   }
 </style>
