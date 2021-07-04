@@ -24,7 +24,7 @@ class DeveloperFactory extends Factory
         return [
             'nome' => $this->faker->name,
             'sexo' => $this->faker->randomElement($array = array ('F', 'M')),
-            'idade' => $this->faker->randomDigit,
+            'idade' => $this->faker->numberBetween($min = 1, $max = 100),
             'hobby' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'data_nascimento' => $this->faker->date($format = 'Y-m-d', $max = 'now')
         ];
