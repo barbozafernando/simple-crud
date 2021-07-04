@@ -1,7 +1,5 @@
 <template>
   <div>
-   <h1>salves2</h1>
+    <router-view />
   </div>
 </template>
-
-

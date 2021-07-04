@@ -1,12 +1,88 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+  <div id="body">
+    <h1>Lista de desenvolvedores</h1>
+
+    <button style="margin-bottom: 15px;">
+      <a href="/produto/novo">Novo Desenvolvedor</a>
+    </button>
+
+    <table border="1">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Sexo</th>
+        <th>Hobby</th>
+        <th>Data de nascimento</th>
+        <th>Ações</th>
+      </tr>
+      
+      <tr v-for="developer in developers" :key="developer.id">
+        <td>
+          {{ developer.id }}
+        </td>
+        <td>
+          {{ developer.nome }}
+        </td>
+        <td>
+          {{ developer.idade }}
+        </td>
+        <td>
+          {{ developer.sexo }}
+        </td>
+        <td>
+          {{ developer.hobby }}
+        </td>
+        <td>
+          {{ developer.data_nascimento }}
+        </td>
+        <td class="action-column">
+          <a href="/produto/">Exibir</a>
+          <a href="/produto/editar/">Editar</a>
+          <a href="/produto/apagar/">Excluir</a>
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
 
 <script>
+import api from "@/services/developer";
 
 export default {
-  name: 'Home',
+  name: "Home",
+  async mounted() {
+    await this.getAllDevelopers();
+  },
+  data() {
+    return {
+      developers: []
+    }
+  },
+  methods: {
+    async getAllDevelopers() {
+      const { data: response } = await api.getAll();
+
+      this.developers = response.data;
+    }
+  }
 }
 </script>
+
+<style>
+  body {
+    text-align: center;
+  }
+  table {
+    margin: auto;
+  }
+  button a {
+    text-decoration: none;
+    color: #000;
+  }
+  .action-column > * {
+    margin: 0 5px
+  }
+</style>
+
+
