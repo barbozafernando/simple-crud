@@ -38,7 +38,7 @@
         </td>
         <td class="action-column">
           <button @click="handleShowDeveloper(developer.id)">Exibir</button>
-          <button >Editar</button>
+          <button @click="handleUpdateDeveloper(developer.id)">Editar</button>
           <button >Excluir</button>
         </td>
       </tr>
@@ -66,10 +66,13 @@ export default {
       this.developers = response.data;
     },
     handleShowDeveloper(developerId) {
-      return this.$router.push({ name: 'developer', params: { developerId } });
+      return this.$router.push({ name: 'developer-show', params: { developerId } });
     },
     handleAddNewDeveloper() {
       return this.$router.push({ name: 'developer-new' });
+    },
+    handleUpdateDeveloper(developerId) {
+      return this.$router.push({ name: 'developer-edit', params: { developerId } });
     }
   }
 }

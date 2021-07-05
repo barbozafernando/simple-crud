@@ -13,13 +13,18 @@ const routes = [
     component: Home
   }, 
   {
-    path: '/developers/:developerId',
-    name: 'developer',
+    path: '/developers/show/:developerId',
+    name: 'developer-show',
     component: Developer
   }, 
   {
     path: '/developers/new',
     name: 'developer-new',
+    component: Developer
+  },
+  {
+    path: '/developers/edit/:developerId',
+    name: 'developer-edit',
     component: Developer
   }
 ]

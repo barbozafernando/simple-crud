@@ -7,25 +7,37 @@
         <p v-if="!isGoingToAddANewDeveloper">
           <label for="id">ID:</label> </br>
 
-          <input type="text" v-model="developer.id" />
+          <input 
+            type="text" 
+            v-model="developer.id" 
+            :disabled="!isGoingToAddANewDeveloper && !isGoingToUpdateADeveloper"
+          />
         </p>
 
         <p>
           <label for="nome">Nome:</label> </br>
 
-          <input type="text" v-model="developer.nome" />
+          <input 
+            type="text" 
+            v-model="developer.nome" 
+            :disabled="!isGoingToAddANewDeveloper && !isGoingToUpdateADeveloper" 
+          />
         </p>
 
         <p>
           <label for="idade">Idade:</label></br>
 
-          <input type="number" v-model="developer.idade" />
+          <input 
+            type="number" 
+            v-model="developer.idade" 
+            :disabled="!isGoingToAddANewDeveloper && !isGoingToUpdateADeveloper"
+          />
         </p>
 
         <p>
           <label for="sexo">Sexo:</label></br>
           
-          <select name="sexo" v-model="developer.sexo">
+          <select name="sexo" v-model="developer.sexo" :disabled="!isGoingToAddANewDeveloper && !isGoingToUpdateADeveloper">
             <option value="M" >Masculino</option>
             <option value="F">Feminino</option>
           </select>
@@ -38,6 +50,7 @@
             name="hobby" 
             v-model="developer.hobby" 
             rows="5"
+            :disabled="!isGoingToAddANewDeveloper && !isGoingToUpdateADeveloper"
           />
         </p>
 
@@ -48,6 +61,7 @@
             type="date" 
             name="dataNascimento" 
             v-model="developer.dataNascimento"
+            :disabled="!isGoingToAddANewDeveloper && !isGoingToUpdateADeveloper"
           />
         </p>
 
@@ -63,7 +77,7 @@
             style="margin-top: 30px" 
             @click="handleSubmit"
           >
-            Cadastrar
+            {{ this.isGoingToUpdateADeveloper ? 'Atualizar' : 'Cadastrar' }}
           </button>
         </div>
       </div>
@@ -80,6 +94,8 @@ export default {
   async mounted() {
     if (this.isGoingToAddANewDeveloper) return;
 
+    this.isGoingToShowADeveloper
+
     const developerId = this.getRouteParams();
     const { data: response } = await api.getById(developerId);
 
@@ -93,7 +109,10 @@ export default {
   computed: {
     isGoingToAddANewDeveloper() {
       return !this.getRouteParams();
-    }
+    },
+    isGoingToUpdateADeveloper() {
+      return this.$route.name === 'developer-edit';
+    },
   },
   methods: {
     goToPreviousRoute() {
