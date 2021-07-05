@@ -103,6 +103,9 @@ export default {
       const { developerId } = this.$route.params;
       return developerId;
     },
+    showAlert(msg) {
+      return alert(msg);
+    },
     async handleSubmit(event) {
       event.preventDefault();
 
@@ -117,11 +120,11 @@ export default {
       const response = await api.create(snakeCaseKeys(data));
 
       if (response.status === 201) {
-        alert("Developer added successfully!");
+        this.showAlert("Developer added successfully!");
         return this.$router.push({ name: "Home" })
       }
 
-      alert("Error: Developer not added. Try again later!");
+      return this.showAlert(response.error.msg);
     }
   }
 }
