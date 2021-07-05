@@ -77,6 +77,9 @@ export default {
     }
   },
   methods: {
+    refreshPage() {
+      return this.$router.go();
+    },
     getAllDevelopers() {
       return api.getAll()
         .then((response) => {
@@ -109,13 +112,13 @@ export default {
         .then((response) => {          
           if (response.status === 204) {
             this.showAlert("Developer removed successfully!");
-            return this.$router.go();
+            return refreshPage();
           }
         })
         .catch(({ response }) => {
           if (response.status === 400) {
             this.showAlert(response.data.error.message);
-            return this.$router.go();
+            return refreshPage();
           }
         })
         .finally(() => (this.isLoading = false));
