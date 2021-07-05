@@ -35,7 +35,20 @@ class DeveloperController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $developer = $request->only(
+            ['nome', 'idade', 'sexo', 'hobby', 'data_nascimento']
+        );
+
+        $isOk = $this->developerService->save($developer);
+
+        if (! $isOk) {
+            return response()->json(
+                ['msg' => 'There was a problem with the provided data. Try again later.'],
+                400
+            );
+        }
+
+        return response()->json([], 201);
     }
 
     /**

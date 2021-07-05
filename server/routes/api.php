@@ -16,4 +16,5 @@ use App\Http\Controllers\DeveloperController;
 */
 
 Route::get('/developers', [DeveloperController::class, 'index']);
+Route::post('/developers', [DeveloperController::class, 'store']);
 Route::get('/developers/{id}', [DeveloperController::class, 'show']);
