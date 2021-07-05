@@ -20,4 +20,5 @@ Route::middleware([Cors::class])->group(function () {
     Route::post('/developers', [DeveloperController::class, 'store']);
     Route::get('/developers/{id}', [DeveloperController::class, 'show']);
     Route::put('/developers/{id}', [DeveloperController::class, 'update']);
+    Route::delete('/developers/{id}', [DeveloperController::class, 'destroy']);
 });
