@@ -1,6 +1,14 @@
 <template>
   <div class="body">
     <h1>Desenvolvedor</h1>
+
+    <loading 
+      :active.sync="isLoading"
+      :can-cancel="false"
+      background-color="#2B5480"
+      color="#fff"
+      loader="spinner"
+    />
   
     <div class="box">
       <div class="content">
@@ -86,23 +94,38 @@
 </template>
 
 <script>
+import mixin from "@/mixin";
 import api from "@/services/developer";
+import Loading from 'vue-loading-overlay';
 import snakeCaseKeys from "snakecase-keys";
 import camelCaseKeys from "camelcase-keys";
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   name: "Developer",
-  async mounted() {
+  mixins: [mixin],
+  components: {
+    Loading
+  },
+  mounted() {
     if (this.isGoingToAddANewDeveloper) return;
 
+    this.isLoading = true;
     const developerId = this.getRouteParams();
-    const { data: response } = await api.getById(developerId);
 
-    this.developer = camelCaseKeys(response);
+    api.getById(developerId)
+      .then((response) => {
+        return (this.developer = camelCaseKeys(response.data));
+      })
+      .catch(({ response }) => {
+        return this.showAlert(response.data.error.message);
+      })
+      .finally(() => (this.isLoading = false));
   },
   data() {
     return {
-      developer: {}
+      developer: {},
+      isLoading: false
     }
   },
   computed: {
@@ -121,10 +144,7 @@ export default {
       const { developerId } = this.$route.params;
       return developerId;
     },
-    showAlert(msg) {
-      return alert(msg);
-    },
-    async handleSubmit(event) {
+    handleSubmit(event) {
       event.preventDefault();
 
       const data = {
@@ -139,9 +159,9 @@ export default {
 
       const saveOrUpdate = developerId ? api.update : api.create;
 
-      saveOrUpdate(snakeCaseKeys(data), developerId)
+      this.isLoading = true;
+      return saveOrUpdate(snakeCaseKeys(data), developerId)
         .then((response) => {
-
           if (response.status === 200) {
             this.showAlert("Developer updated successfully!");
             return this.$router.push({ name: "Home" });
@@ -149,15 +169,15 @@ export default {
 
           if (response.status === 201) {
             this.showAlert("Developer added successfully!");
-            return this.$router.push({ name: "Home" })
+            return this.$router.push({ name: "Home" });
           }
         })
         .catch(({ response }) => {
           if (response.status >= 400 && response.status <= 499) {
-            this.showAlert(response.data.error.message);
-            return this.$router.push({ name: "Home" });
+            return this.showAlert(response.data.error.message);
           }
         })
+        .finally(() => (this.isLoading = false));
     }
   }
 }
