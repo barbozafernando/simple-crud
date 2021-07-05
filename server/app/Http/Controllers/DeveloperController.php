@@ -43,7 +43,9 @@ class DeveloperController extends Controller
 
         if (! $isOk) {
             return response()->json(
-                ['msg' => 'There was a problem with the provided data. Try again later.'],
+                ['error' => 
+                    ['msg' => 'There was a problem with the provided data. Try again later.']
+                ],
                 400
             );
         }
