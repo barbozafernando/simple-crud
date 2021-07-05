@@ -3,20 +3,21 @@
 namespace App\Http\Services;
 
 use App\Models\Developer;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DeveloperService
 {
-    public function getAll()
+    public function getAll(): LengthAwarePaginator
     {
         return Developer::paginate(5);
     }
 
-    public function getById($id)
+    public function getById(string $id): Developer
     {
         return Developer::find($id);
     }
 
-    public function save($newDeveloper)
+    public function save(array $newDeveloper): bool
     {
         try {
             $developer = new Developer();
@@ -35,7 +36,7 @@ class DeveloperService
         }
     }
 
-    public function edit($editDeveloper, $id)
+    public function edit(array $editDeveloper, string $id): bool
     {
         try {
             $developer = Developer::find($id);
@@ -47,6 +48,18 @@ class DeveloperService
             $developer->data_nascimento = $editDeveloper['data_nascimento'];
 
             $developer->save();
+
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function delete(string $id): bool
+    {
+        try {
+            $developer = Developer::find($id);
+            $developer->delete();
 
             return true;
         } catch (\Throwable $th) {
