@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Middleware\Cors;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DeveloperController;
 
@@ -15,6 +15,9 @@ use App\Http\Controllers\DeveloperController;
 |
 */
 
-Route::get('/developers', [DeveloperController::class, 'index']);
-Route::post('/developers', [DeveloperController::class, 'store']);
-Route::get('/developers/{id}', [DeveloperController::class, 'show']);
+Route::middleware([Cors::class])->group(function () {
+    Route::get('/developers', [DeveloperController::class, 'index']);
+    Route::post('/developers', [DeveloperController::class, 'store']);
+    Route::get('/developers/{id}', [DeveloperController::class, 'show']);
+    Route::put('/developers/{id}', [DeveloperController::class, 'update']);
+});
