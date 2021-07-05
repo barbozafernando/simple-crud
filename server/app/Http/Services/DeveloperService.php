@@ -34,4 +34,23 @@ class DeveloperService
             return false;
         }
     }
+
+    public function edit($editDeveloper, $id)
+    {
+        try {
+            $developer = Developer::find($id);
+
+            $developer->nome = $editDeveloper['nome'];
+            $developer->idade = $editDeveloper['idade'];
+            $developer->sexo = $editDeveloper['sexo'];
+            $developer->hobby = $editDeveloper['hobby'];
+            $developer->data_nascimento = $editDeveloper['data_nascimento'];
+
+            $developer->save();
+
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
 }

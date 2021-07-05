@@ -44,7 +44,7 @@ class DeveloperController extends Controller
         if (! $isOk) {
             return response()->json(
                 ['error' => 
-                    ['msg' => 'There was a problem with the provided data. Try again later.']
+                    ['message' => 'There was a problem with the provided data. Try again later.']
                 ],
                 400
             );
@@ -65,7 +65,7 @@ class DeveloperController extends Controller
 
         if (! $developer) {
             return response()->json(
-                ['msg' => 'Developer not found'], 
+                ['message' => 'Developer not found'], 
                 404
             );
         }
@@ -82,7 +82,22 @@ class DeveloperController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $developer = $request->only(
+            ['nome', 'idade', 'sexo', 'hobby', 'data_nascimento']
+        );
+
+        $isOk = $this->developerService->edit($developer, $id);
+
+        if (! $isOk) {
+            return response()->json(
+                ['error' => 
+                    ['message' => 'There was a problem with the provided data. Try again later.']
+                ],
+                400
+            );
+        }
+
+        return response()->json([], 200);
     }
 
     /**
