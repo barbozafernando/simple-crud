@@ -4,7 +4,7 @@
   
     <div class="box">
       <div class="content">
-        <p v-if="!isGoingToAddANewDeveloper">
+        <p v-if="!isGoingToAddANewDeveloper && !isGoingToUpdateADeveloper">
           <label for="id">ID:</label> </br>
 
           <input 
@@ -135,14 +135,29 @@ export default {
         dataNascimento: this.developer.dataNascimento
       }
 
-      const response = await api.create(snakeCaseKeys(data));
+      const developerId = this.getRouteParams();
 
-      if (response.status === 201) {
-        this.showAlert("Developer added successfully!");
-        return this.$router.push({ name: "Home" })
-      }
+      const saveOrUpdate = developerId ? api.update : api.create;
 
-      return this.showAlert(response.error.msg);
+      saveOrUpdate(snakeCaseKeys(data), developerId)
+        .then((response) => {
+
+          if (response.status === 200) {
+            this.showAlert("Developer updated successfully!");
+            return this.$router.push({ name: "Home" });
+          }
+
+          if (response.status === 201) {
+            this.showAlert("Developer added successfully!");
+            return this.$router.push({ name: "Home" })
+          }
+        })
+        .catch(({ response }) => {
+          if (response.status >= 400 && response.status <= 499) {
+            this.showAlert(response.data.error.message);
+            return this.$router.push({ name: "Home" });
+          }
+        })
     }
   }
 }
