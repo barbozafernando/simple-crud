@@ -16,6 +16,11 @@ const routes = [
     path: '/developers/:developerId',
     name: 'developer',
     component: Developer
+  }, 
+  {
+    path: '/developers/new',
+    name: 'developer-new',
+    component: Developer
   }
 ]
 

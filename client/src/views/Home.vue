@@ -2,8 +2,8 @@
   <div id="body">
     <h1>Lista de desenvolvedores</h1>
 
-    <button style="margin-bottom: 15px;">
-      <a href="/produto/novo">Novo Desenvolvedor</a>
+    <button style="margin-bottom: 15px;" @click="handleAddNewDeveloper">
+      Novo Desenvolvedor
     </button>
 
     <table border="1">
@@ -67,6 +67,9 @@ export default {
     },
     handleShowDeveloper(developerId) {
       return this.$router.push({ name: 'developer', params: { developerId } });
+    },
+    handleAddNewDeveloper() {
+      return this.$router.push({ name: 'developer-new' });
     }
   }
 }
