@@ -44,7 +44,7 @@ class DeveloperController extends Controller
         if (! $isOk) {
             return response()->json(
                 ['error' => 
-                    ['message' => 'There was a problem with the provided data. Try again later.']
+                    ['message' => 'Could not add this developer.']
                 ],
                 400
             );
@@ -91,7 +91,7 @@ class DeveloperController extends Controller
         if (! $isOk) {
             return response()->json(
                 ['error' => 
-                    ['message' => 'There was a problem with the provided data. Try again later.']
+                    ['message' => 'Could not update this developer.']
                 ],
                 400
             );
@@ -108,6 +108,17 @@ class DeveloperController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $isOk = $this->developerService->delete($id);
+
+        if (! $isOk) {
+            return response()->json(
+                ['error' => 
+                    ['message' => 'Could not delete this developer.']
+                ],
+                400
+            );
+        }
+
+        return response()->json([], 204);
     }
 }
