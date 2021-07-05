@@ -88,18 +88,17 @@
 <script>
 import api from "@/services/developer";
 import snakeCaseKeys from "snakecase-keys";
+import camelCaseKeys from "camelcase-keys";
 
 export default {
   name: "Developer",
   async mounted() {
     if (this.isGoingToAddANewDeveloper) return;
 
-    this.isGoingToShowADeveloper
-
     const developerId = this.getRouteParams();
     const { data: response } = await api.getById(developerId);
 
-    this.developer = response;
+    this.developer = camelCaseKeys(response);
   },
   data() {
     return {
