@@ -9,10 +9,7 @@ class Developer extends Model
 {
     use HasFactory;
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
     public $timestamps = false;
+
+    protected $casts = ['data_nascimento' => 'date:d/m/Y'];
 }
