@@ -10,6 +10,4 @@ class Developer extends Model
     use HasFactory;
 
     public $timestamps = false;
-
-    protected $casts = ['data_nascimento' => 'date:d/m/Y'];
 }
