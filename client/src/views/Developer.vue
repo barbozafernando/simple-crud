@@ -84,6 +84,7 @@
           <button 
             style="margin-top: 30px" 
             @click="handleSubmit"
+            v-if="!isGoingToShowADeveloper"
           >
             {{ this.isGoingToUpdateADeveloper ? 'Atualizar' : 'Cadastrar' }}
           </button>
@@ -130,10 +131,13 @@ export default {
   },
   computed: {
     isGoingToAddANewDeveloper() {
-      return !this.getRouteParams();
+      return this.$route.name === 'developer-new';
     },
     isGoingToUpdateADeveloper() {
       return this.$route.name === 'developer-edit';
+    },
+    isGoingToShowADeveloper() {
+      return this.$route.name === 'developer-show';
     },
   },
   methods: {

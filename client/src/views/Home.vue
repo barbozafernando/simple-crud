@@ -144,6 +144,7 @@ export default {
       if (!isGoingToDeleteDeveloper) return;
 
       this.isLoading = true;
+
       return api.remove(developerId)
         .then(response => {       
           if (response.status === 204) {
@@ -164,7 +165,7 @@ export default {
 
       this.getAllDevelopers({
         page
-      })
+      });
     }
   }
 }
