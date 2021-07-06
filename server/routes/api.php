@@ -15,10 +15,10 @@ use App\Http\Controllers\DeveloperController;
 |
 */
 
-Route::middleware([Cors::class])->group(function () {
-    Route::get('/developers', [DeveloperController::class, 'index']);
-    Route::post('/developers', [DeveloperController::class, 'store']);
-    Route::get('/developers/{id}', [DeveloperController::class, 'show']);
-    Route::put('/developers/{id}', [DeveloperController::class, 'update']);
-    Route::delete('/developers/{id}', [DeveloperController::class, 'destroy']);
-});
+$apiVersion = 'v1';
+
+Route::get("/$apiVersion/developers", [DeveloperController::class, 'index']);
+Route::post("/$apiVersion/developers", [DeveloperController::class, 'store']);
+Route::get("/$apiVersion/developers/{id}", [DeveloperController::class, 'show']);
+Route::put("/$apiVersion/developers/{id}", [DeveloperController::class, 'update']);
+Route::delete("/$apiVersion/developers/{id}", [DeveloperController::class, 'destroy']);
