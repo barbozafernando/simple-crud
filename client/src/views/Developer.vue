@@ -161,7 +161,7 @@ export default {
 
       this.isLoading = true;
       return saveOrUpdate(snakeCaseKeys(data), developerId)
-        .then((response) => {
+        .then(response => {
           if (response.status === 200) {
             this.showAlert("Developer updated successfully!");
             return this.$router.push({ name: "Home" });

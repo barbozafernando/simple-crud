@@ -109,16 +109,17 @@ export default {
 
       this.isLoading = true;
       return api.remove(developerId)
-        .then((response) => {          
+        .then(response => {       
+          
           if (response.status === 204) {
             this.showAlert("Developer removed successfully!");
-            return refreshPage();
+            return this.refreshPage();
           }
         })
         .catch(({ response }) => {
           if (response.status === 400) {
             this.showAlert(response.data.error.message);
-            return refreshPage();
+            return this.refreshPage();
           }
         })
         .finally(() => (this.isLoading = false));
