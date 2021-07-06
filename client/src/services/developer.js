@@ -1,6 +1,7 @@
 import axios from "@/services";
 
-const getAll = () => axios.get("/developers");
+const getAll = ({ page, rowsPerPage = 5 }) => 
+    axios.get(`/developers?rows=${rowsPerPage}&page=${page}`);
 
 const getById = developerId => axios.get(`/developers/${developerId}`);
 

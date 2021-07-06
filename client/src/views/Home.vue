@@ -51,11 +51,29 @@
         </td>
       </tr>
     </table>
+
+    <Paginate
+      :page-count="pagination.totalPages"
+      :click-handler="pageChangeHandler"
+      :prev-text="'Anterior'"
+      :next-text="'Próximo'"
+      :container-class="'pagination'"
+      :page-class="'page-item'"
+      :margin-pages="3"
+      :page-link-class="'buttons'"
+      :prev-link-class="'buttons'"
+      :next-link-class="'buttons'"
+      :prev-class="'next-prev-buttons'"
+      :next-class="'next-prev-buttons'"
+      :active-class="'active-button'"
+    >
+    </Paginate>
   </div>
 </template>
 
 <script>
 import mixin from "@/mixin";
+import Paginate from 'vuejs-paginate';
 import api from "@/services/developer";
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
@@ -64,16 +82,24 @@ export default {
   name: "Home",
   mixins: [mixin],
   components: {
-    Loading
+    Loading,
+    Paginate
   },
   mounted() {
     this.isLoading = true;
-    this.getAllDevelopers();
+    this.getAllDevelopers({
+      page: 1,
+      rowsPerPage: 5
+    });
   },
   data() {
     return {
       developers: [],
-      isLoading: false
+      isLoading: false,
+      pagination: {
+        currentPage: 1,
+        totalPages: 1
+      }
     }
   },
   methods: {
@@ -84,11 +110,17 @@ export default {
       const dateSplitted = date.split("-");
       return `${dateSplitted[2]}/${dateSplitted[1]}/${dateSplitted[0]}`;
     },
-    getAllDevelopers() {
-      return api.getAll()
+    getAllDevelopers(pagination) {
+      this.isLoading = true;
+
+      return api.getAll(pagination)
         .then((response) => {
-          const { data } = response.data;
-          return (this.developers = data);
+          const { data } = response;
+
+          this.pagination.currentPage = data.current_page;
+          this.pagination.totalPages = data.last_page;
+
+          return (this.developers = data.data);
         })
         .catch(({ response }) => {
           return this.showAlert(response.data.error.message);
@@ -126,6 +158,13 @@ export default {
           }
         })
         .finally(() => (this.isLoading = false));
+    },
+    pageChangeHandler(page) {
+      this.pagination.currentPage = page;
+
+      this.getAllDevelopers({
+        page
+      })
     }
   }
 }
@@ -145,6 +184,34 @@ export default {
   .action-column > * {
     margin: 0 5px
   }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin-top: 30px;
+  }
+  .page-item {
+    padding: 2px 10px;
+    border: 2px solid #f0f0f0;
+    display: flex;
+    color: #3667e3;
+    align-items: center;
+  }
+  .buttons {
+    padding: 8px;
+    font-weight: bold;
+    border-radius: 5px;
+    list-style-type: none;
+  }
+  .next-prev-buttons {
+    display: flex;
+    color: #3667e3;
+    align-items: center;
+    padding: 2px 10px;
+    border: 2px solid #f0f0f0;
+  }
+  .active-button {
+    color: white;
+    background-color: #3667e3;
+  }
 </style>
-
-
