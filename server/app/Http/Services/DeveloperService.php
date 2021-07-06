@@ -7,9 +7,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class DeveloperService
 {
-    public function getAll(): LengthAwarePaginator
+    public function getAll(string $rowsPerPage): LengthAwarePaginator
     {
-        return Developer::paginate(5);
+        return Developer::paginate($rowsPerPage);
     }
 
     public function getById(string $id): Developer

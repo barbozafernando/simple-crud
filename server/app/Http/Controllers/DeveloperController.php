@@ -20,9 +20,11 @@ class DeveloperController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $developers = $this->developerService->getAll();
+        $rowsPerPage = $request->query('rows');
+
+        $developers = $this->developerService->getAll($rowsPerPage);
 
         return response()->json($developers);
     }
