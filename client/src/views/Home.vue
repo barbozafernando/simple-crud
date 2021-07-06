@@ -53,6 +53,7 @@
     </table>
 
     <Paginate
+      v-if="this.hasDevelopersOnTable"
       :page-count="pagination.totalPages"
       :click-handler="pageChangeHandler"
       :prev-text="'Anterior'"
@@ -166,6 +167,11 @@ export default {
       this.getAllDevelopers({
         page
       });
+    }
+  },
+  computed: {
+    hasDevelopersOnTable() {
+      return this.developers.length;
     }
   }
 }
