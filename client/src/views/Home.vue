@@ -42,7 +42,7 @@
           {{ developer.hobby }}
         </td>
         <td>
-          {{ developer.data_nascimento }}
+          {{ convertDateIntoPtBr(developer.data_nascimento) }}
         </td>
         <td class="action-column">
           <button @click="handleShowDeveloper(developer.id)">Exibir</button>
@@ -80,6 +80,10 @@ export default {
     refreshPage() {
       return this.$router.go();
     },
+    convertDateIntoPtBr(date) {
+      const dateSplitted = date.split("-");
+      return `${dateSplitted[2]}/${dateSplitted[1]}/${dateSplitted[0]}`;
+    },
     getAllDevelopers() {
       return api.getAll()
         .then((response) => {
@@ -110,7 +114,6 @@ export default {
       this.isLoading = true;
       return api.remove(developerId)
         .then(response => {       
-          
           if (response.status === 204) {
             this.showAlert("Developer removed successfully!");
             return this.refreshPage();
