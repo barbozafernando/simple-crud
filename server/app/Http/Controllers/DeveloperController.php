@@ -24,7 +24,7 @@ class DeveloperController extends Controller
     {
         $rowsPerPage = $request->query('rows');
 
-        $developers = $this->developerService->getAll($rowsPerPage);
+        $developers = $this->developerService->getAllByPagination($rowsPerPage);
 
         return response()->json($developers);
     }
@@ -99,7 +99,7 @@ class DeveloperController extends Controller
             );
         }
 
-        return response()->json([], 200);
+        return response()->json([]);
     }
 
     /**

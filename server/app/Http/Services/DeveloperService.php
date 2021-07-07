@@ -3,11 +3,17 @@
 namespace App\Http\Services;
 
 use App\Models\Developer;
+use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class DeveloperService
 {
-    public function getAll(string $rowsPerPage): LengthAwarePaginator
+    public function getAll(): Collection
+    {
+        return Developer::all();
+    }
+
+    public function getAllByPagination(string $rowsPerPage): LengthAwarePaginator
     {
         return Developer::paginate($rowsPerPage);
     }
