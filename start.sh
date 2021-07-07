@@ -3,6 +3,7 @@ echo "Starting installation..."
 
 cd server
 
+composer install &&
 cp .env.example .env &&
 docker-compose up -d &&
 docker exec -t app-php sh -c "
