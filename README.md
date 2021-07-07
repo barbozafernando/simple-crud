@@ -10,5 +10,5 @@ You need some tools installed on your computer in order to run the project.
 ## Instructions
 
 - Clone the repository: `git clone https://github.com/barbozafernando/crud.git`
-- Run `./start.sh`
+- Type `cd crud`and run `./start.sh`
 
