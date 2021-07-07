@@ -9,12 +9,6 @@ You need some tools installed on your computer in order to run the project.
 
 ## Instructions
 
-- Clone the repository into a folder of your choice. </br>
-`git clone https://github.com/barbozafernando/crud.git`
+- Clone the repository: `git clone https://github.com/barbozafernando/crud.git`
+- Run ´./start.sh`
 
-- Go to `crud/server` and run `composer install`. 
-- When that finished, you should type `docker-compose up`
-- Now go to `crud/client` and run `npm install`
-- When that finished, you should type `docker-compose up`
-
-That's it.
